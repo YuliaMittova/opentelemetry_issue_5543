@@ -1,0 +1,51 @@
+spring:
+  codec:
+    max-in-memory-size-in-bytes: 512000
+  r2dbc:
+    url: ${R2DBC_URL:r2dbc:postgresql://localhost:5432/example?currentSchema=example}
+    username: ${R2DBC_USER:test}
+    password: ${R2DBC_PASSWORD:test}
+  messages:
+    basename: i18n.messages
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration,org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
+
+security:
+  basic:
+    enabled: false
+
+springdoc:
+  show-actuator: true
+  swagger-ui:
+    path: "/"
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: health
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+    metrics:
+      enabled: true
+
+graphql:
+  packages:
+    - "com.example.otelissue"
+  playground:
+    enabled: true # TODO: this should go to our application-local.yml files eventually
+
+server:
+  error:
+    include-stacktrace: ON_PARAM
+    include-message: ALWAYS
+
+enforce:
+  pre-commit-hook: ${ENFORCE_PRE_COMMIT_HOOK:true}
+
+auth:
+  require-recaptcha: ${AUTH_REQUIRE_RECAPTCHA:true}

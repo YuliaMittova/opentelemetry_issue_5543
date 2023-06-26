@@ -1,0 +1,25 @@
+# Provides contact information of the owner responsible for this subgraph schema.
+directive @contact(description: String!, name: String!, url: String!) on SCHEMA
+
+type Student {
+  id: UUID!
+  addressId: UUID!
+  vehicleId: UUID
+  firstName: String!
+  surname: String!
+  age: Int
+}
+
+input StudentInput {
+  id: UUID!
+}
+
+type Query {
+  students: [Student!]!
+
+  studentById(input: StudentInput!): Student!
+}
+
+# A universally unique identifier compliant UUID Scalar
+scalar UUID
+
